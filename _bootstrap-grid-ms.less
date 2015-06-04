@@ -1,0 +1,130 @@
+/*!
+    Bootstrap3-ms-breakpoint - https://github.com/hesselberg/Bootstrap3-ms-breakpoint
+    Licensed under the MIT license - http://opensource.org/licenses/MIT
+    Copyright (c) 2015 Lars Hesselberg
+
+    Twitter: @hesselberg
+!*/
+
+// Small medium screen / phablet, large phones
+@screen-ms:                  480px;
+@screen-ms-min:              @screen-ms;
+//** Deprecated `@screen-ms-desktop` as of v3.0.1
+@screen-ms-desktop:          @screen-ms-min;
+
+// So media queries don't overlap when required, provide a maximum
+@screen-xs-max:              (@screen-ms-min - 1);
+@screen-ms-max:              (@screen-sm-min - 1);
+
+// Small medium grid
+//
+// Columns, offsets, pushes, and pulls for the Small medium.
+
+@media (min-width: @screen-ms-min) and (max-width: @screen-ms-max) {
+    .make-grid(ms);
+}
+
+// Generate the Small medium columns
+.make-ms-column(@columns; @gutter: @grid-gutter-width) {
+    position: relative;
+    min-height: 1px;
+    padding-left:  (@gutter / 2);
+    padding-right: (@gutter / 2);
+
+    @media (min-width: @screen-ms-min) {
+        float: left;
+        width: percentage((@columns / @grid-columns));
+    }
+}
+.make-ms-column-offset(@columns) {
+    @media (min-width: @screen-ms-min) {
+        margin-left: percentage((@columns / @grid-columns));
+    }
+}
+.make-ms-column-push(@columns) {
+    @media (min-width: @screen-ms-min) {
+        left: percentage((@columns / @grid-columns));
+    }
+}
+.make-ms-column-pull(@columns) {
+    @media (min-width: @screen-ms-min) {
+        right: percentage((@columns / @grid-columns));
+    }
+}
+
+
+// Framework grid generation
+//
+// Used only by Bootstrap to generate the correct number of grid classes given
+// any value of `@grid-columns`.
+
+.make-grid-columns() {
+    // Common styles for all sizes of grid columns, widths 1-12
+    .col(@index) { // initial
+        @item: ~".col-xs-@{index}, .col-ms-@{index}, .col-sm-@{index}, .col-md-@{index}, .col-lg-@{index}";
+        .col((@index + 1), @item);
+    }
+    .col(@index, @list) when (@index =< @grid-columns) { // general; "=<" isn't a typo
+        @item: ~".col-xs-@{index}, .col-ms-@{index}, .col-sm-@{index}, .col-md-@{index}, .col-lg-@{index}";
+        .col((@index + 1), ~"@{list}, @{item}");
+    }
+}
+
+// Visibility utilities
+.visible-ms {
+    .responsive-invisibility();
+}
+
+.visible-ms-block,
+.visible-ms-inline,
+.visible-ms-inline-block {
+    display: none !important;
+}
+
+.visible-xs {
+    @media (min-width: @screen-xs-min) and (max-width: @screen-xs-max){
+        .responsive-visibility();
+    }
+}
+.visible-xs-block {
+    @media (min-width: @screen-xs-min) and (max-width: @screen-xs-max){
+        display: block !important;
+    }
+}
+.visible-xs-inline {
+    @media (min-width: @screen-xs-min) and (max-width: @screen-xs-max){
+        display: inline !important;
+    }
+}
+.visible-xs-inline-block {
+    @media (min-width: @screen-xs-min) and (max-width: @screen-xs-max){
+        display: inline-block !important;
+    }
+}
+
+.visible-ms {
+    @media (min-width: @screen-ms-min) {
+        .responsive-visibility();
+    }
+}
+.visible-ms-block {
+    @media (min-width: @screen-ms-min) {
+        display: block !important;
+    }
+}
+.visible-ms-inline {
+    @media (min-width: @screen-ms-min) {
+        display: inline !important;
+    }
+}
+.visible-ms-inline-block {
+    @media (min-width: @screen-ms-min) {
+        display: inline-block !important;
+    }
+}
+
+.hidden-ms {
+    @media (min-width: @screen-ms-min) {
+        .responsive-invisibility();
+    }
+}
